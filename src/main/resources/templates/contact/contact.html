@@ -27,21 +27,6 @@
             }
         }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .info-card {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            padding: 1.5rem;
-            background: var(--color-surface-container-low);
-            border-radius: 1rem;
-        }
-
         .contact-form-card {
             background: var(--color-surface-container-lowest);
             padding: 3rem;
@@ -114,37 +99,6 @@
 
 <main class="main-wrapper">
     <section class="contact-layout">
-
-        <div class="contact-info">
-            <div>
-                <h2 class="section-title" style="font-size: 1.8rem;">Información de contacto</h2>
-                <p style="color: var(--color-on-surface-variant); margin-top: 1rem;">Respondemos en menos de 24 horas hábiles.</p>
-            </div>
-
-            <div class="info-card">
-                <span class="material-symbols-outlined" style="color: var(--color-primary);">location_on</span>
-                <div>
-                    <p style="font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Dirección</p>
-                    <p>Av. de los Granados E14-30<br/>Quito, Ecuador</p>
-                </div>
-            </div>
-
-            <div class="info-card">
-                <span class="material-symbols-outlined" style="color: var(--color-secondary);">mail</span>
-                <div>
-                    <p style="font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Correo electrónico</p>
-                    <p>contacto@ecuadorcomparte.org</p>
-                </div>
-            </div>
-
-            <div class="info-card">
-                <span class="material-symbols-outlined" style="color: var(--color-tertiary);">schedule</span>
-                <div>
-                    <p style="font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Horario</p>
-                    <p>Lun – Vie | 08:00 – 17:00</p>
-                </div>
-            </div>
-        </div>
 
         <div class="contact-form-card">
             <form th:action="@{/contact/enviar}" th:object="${contactoDTO}" method="post">

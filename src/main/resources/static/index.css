@@ -57,12 +57,10 @@
     --color-on-error:                 #ffefec;
     --color-on-error-container:       #520c00;
 
-
     --font-headline: 'Plus Jakarta Sans', sans-serif;
     --font-body:     'Work Sans', sans-serif;
     --font-label:    'Work Sans', sans-serif;
 }
-
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -80,7 +78,6 @@ body {
     font-family: var(--font-body), sans-serif;
     line-height: 1.6;
 }
-
 
 .main-wrapper {
     max-width: 1200px;
@@ -120,7 +117,6 @@ img {
     vertical-align: middle;
 }
 
-
 .textile-pattern {
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l20 20-20 20L0 20z' fill='%23b5161e' fill-opacity='0.05'/%3E%3C/svg%3E");
 }
@@ -136,7 +132,7 @@ img {
 }
 
 .navbar__inner {
-    max-width: 1200px;
+    max-width: 1200px; /* Igual que el wrapper */
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;

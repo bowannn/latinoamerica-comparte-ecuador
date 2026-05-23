@@ -7,11 +7,30 @@ import dev.gustavoquin.integrador.model.repository.ContactRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContactRequestService {
 
     @Autowired
     private ContactRequestRepository contactRepository;
+
+    public List<ContactRequest> findAll() {
+        return contactRepository.findAll();
+    }
+
+    public ContactRequest findById(Long id) {
+        return contactRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contacto no encontrado con ID: " + id));
+    }
+
+    public ContactRequest save(ContactRequest contact) {
+        return contactRepository.save(contact);
+    }
+
+    public void deleteById(Long id) {
+        contactRepository.deleteById(id);
+    }
 
     public void save(ContactRequestDTO contactDTO) {
         ContactRequest contact = new ContactRequest();
@@ -19,7 +38,6 @@ public class ContactRequestService {
         contact.setEmail(contactDTO.getEmail());
         contact.setPhone(contactDTO.getPhone());
         contact.setMessage(contactDTO.getMessage());
-
         try {
             if (contactDTO.getPurpose() != null && !contactDTO.getPurpose().isEmpty()) {
                 contact.setPurpose(Purpose.valueOf(contactDTO.getPurpose().toUpperCase()));
@@ -29,7 +47,6 @@ public class ContactRequestService {
         } catch (IllegalArgumentException e) {
             contact.setPurpose(Purpose.SERVICE);
         }
-
         contactRepository.save(contact);
     }
 }

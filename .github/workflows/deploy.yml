@@ -1,0 +1,30 @@
+name: Deploy Latinoamerica Comparte Ecuador
+
+# El flujo se activa automáticamente cada vez que haces push a la rama main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar el código del repositorio en el servidor de GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configurar el entorno de Java 17 en el servidor
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Darle permisos de ejecución al compilador de Gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # 4. Compilar el proyecto para verificar que no tenga errores de código
+      - name: Build with Gradle
+        run: ./gradlew build -x test

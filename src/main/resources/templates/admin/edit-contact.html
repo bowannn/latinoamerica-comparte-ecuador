@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Ecuador Comparte - Editar Noticia</title>
+    <title>Ecuador Comparte - Editar Contacto</title>
     <link rel="icon" type="image/png" th:href="@{/Ecuador_Co_N.png}" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -19,6 +19,8 @@
         .btn-group { display: flex; gap: 1rem; margin-top: 2rem; }
         .btn-cancel { background: #fce8e6; color: var(--color-error); padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; text-align: center; flex: 1; }
         .btn-submit { background: var(--color-primary); color: var(--color-on-primary); padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer; flex: 1; font-size: 1rem; }
+        .meta-info { background: var(--color-surface-container); border-radius: 0.75rem; padding: 0.85rem 1rem; margin-bottom: 2rem; font-size: 0.88rem; color: var(--color-on-surface-variant); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .meta-info span { display: flex; align-items: center; gap: 0.3rem; }
     </style>
 </head>
 <body class="textile-pattern">
@@ -35,43 +37,53 @@
 <main class="main-wrapper form-container">
     <div class="card-form">
         <span class="section-label" style="color: var(--color-primary);">Panel de Administración</span>
-        <h2 style="font-family: var(--font-headline); margin-bottom: 0.5rem;">Editar Noticia</h2>
-        <p style="color: var(--color-on-surface-variant); margin-bottom: 2rem; font-size: 0.9rem;">
-            ID: <strong th:text="${noticia.id}"></strong> &nbsp;·&nbsp;
-            Publicada: <span th:text="${noticia.publishedAt != null ? #temporals.format(noticia.publishedAt, 'dd/MM/yyyy HH:mm') : 'N/A'}"></span>
-        </p>
+        <h2 style="font-family: var(--font-headline); margin-bottom: 1rem;">Editar Solicitud de Contacto</h2>
 
-        <form th:action="@{/admin/noticias/guardar}" method="post">
+        <div class="meta-info">
+            <span><span class="material-symbols-outlined" style="font-size:16px;">tag</span> ID: <strong th:text="${contacto.id}"></strong></span>
+            <span><span class="material-symbols-outlined" style="font-size:16px;">schedule</span> Recibido: <strong th:text="${#temporals.format(contacto.createdAt, 'dd/MM/yyyy HH:mm')}"></strong></span>
+        </div>
+
+        <form th:action="@{/admin/contactos/guardar}" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <input type="hidden" name="id" th:value="${noticia.id}"/>
+            <input type="hidden" name="id" th:value="${contacto.id}"/>
 
             <div class="form-group">
-                <label for="title">Título de la Noticia</label>
-                <input type="text" id="title" name="title" th:value="${noticia.title}" class="form-control" required/>
+                <label for="name">Nombre completo</label>
+                <input type="text" id="name" name="name" th:value="${contacto.name}" class="form-control" required/>
             </div>
 
             <div class="form-group">
-                <label for="summary">Resumen Breve</label>
-                <input type="text" id="summary" name="summary" th:value="${noticia.summary}" class="form-control" required/>
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" th:value="${contacto.email}" class="form-control" required/>
             </div>
 
             <div class="form-group">
-                <label for="content">Contenido Completo</label>
-                <textarea id="content" name="content" th:text="${noticia.content}" class="form-control" rows="8" required></textarea>
+                <label for="phone">Teléfono</label>
+                <input type="text" id="phone" name="phone" th:value="${contacto.phone}" class="form-control" required/>
             </div>
 
             <div class="form-group">
-                <label for="status">Estado</label>
-                <select id="status" name="status" class="form-control">
-                    <option value="STATUS_DRAFT"
-                            th:selected="${noticia.status == null or noticia.status.name() == 'STATUS_DRAFT'}">
-                        Borrador
+                <label for="purpose">Asunto / Propósito</label>
+                <select id="purpose" name="purpose" class="form-control">
+                    <option value="SERVICE"
+                            th:selected="${contacto.purpose != null and contacto.purpose.name() == 'SERVICE'}">
+                        Servicios Generales
                     </option>
-                    <option value="STATUS_PUBLISHED"
-                            th:selected="${noticia.status != null and noticia.status.name() == 'STATUS_PUBLISHED'}">
-                        Publicado
+                    <option value="EDIFICA_PROGRAM"
+                            th:selected="${contacto.purpose != null and contacto.purpose.name() == 'EDIFICA_PROGRAM'}">
+                        Programa Edifica
+                    </option>
+                    <option value="SHOWS_AND_CONFERENCES"
+                            th:selected="${contacto.purpose != null and contacto.purpose.name() == 'SHOWS_AND_CONFERENCES'}">
+                        Shows y Conferencias
                     </option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" th:text="${contacto.message}" class="form-control" rows="6" required></textarea>
             </div>
 
             <div class="btn-group">

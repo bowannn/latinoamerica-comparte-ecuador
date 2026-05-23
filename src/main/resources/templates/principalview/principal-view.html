@@ -44,9 +44,7 @@
         </div>
 
         <div class="navbar__actions">
-            <a th:href="@{/login}" sec:authorize="isAnonymous()">
-                <button class="btn-primary">Acceder</button>
-            </a>
+
 
             <div sec:authorize="isAuthenticated()" class="navbar__user" style="display: flex; align-items: center; gap: 1rem;">
                 <span sec:authentication="name" style="font-weight: 700; color: var(--color-primary);"></span>

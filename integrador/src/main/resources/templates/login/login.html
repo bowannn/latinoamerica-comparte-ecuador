@@ -1,0 +1,222 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Acceso Privado - Ecuador Comparte</title>
+        <link rel="icon" type="image/png" th:href="@{/Ecuador_Co_N.png}" />
+
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: 'Work Sans', sans-serif;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                background-color: #fcf5ef;
+                background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l20 20-20 20L0 20z' fill='%23b5161e' fill-opacity='0.08'/%3E%3C/svg%3E");
+            }
+
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.5rem 10%;
+            }
+
+            .navbar__logo {
+                display: flex;
+                align-items: center;
+            }
+
+            .navbar__links {
+                display: flex;
+                gap: 2rem;
+            }
+
+            .navbar__links a {
+                text-decoration: none;
+                color: #312e2b;
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            .content {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+            }
+
+            .login-card {
+                background: white;
+                width: 100%;
+                max-width: 420px;
+                padding: 3rem 2.5rem;
+                border-radius: 1.5rem;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+                position: relative;
+                border: 1px solid #eee7e0;
+            }
+
+            .help-pill {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: #eef3ff;
+                color: #235d9a;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .icon-main-svg {
+                width: 45px;
+                height: 45px;
+                fill: #785500;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 2.2rem;
+                font-weight: 800;
+                color: #312e2b;
+                margin-bottom: 0.5rem;
+                text-align: left;
+                letter-spacing: -0.03em;
+            }
+
+            .subtitle {
+                color: #5e5b56;
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+                text-align: left;
+                line-height: 1.4;
+            }
+
+            .input-field {
+                width: 100%;
+                padding: 1.1rem;
+                border: 1px solid #b1aca7;
+                border-radius: 0.8rem;
+                background: #fdfcfb;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                outline: none;
+            }
+
+            .input-field:focus {
+                border-color: #785500;
+                box-shadow: 0 0 0 3px rgba(120, 85, 0, 0.1);
+            }
+
+            .btn-submit {
+                width: 100%;
+                background-color: #feb700;
+                color: #392700;
+                border: none;
+                padding: 1.1rem;
+                border-radius: 0.8rem;
+                font-size: 1rem;
+                font-weight: 800;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 1rem;
+                transition: transform 0.1s;
+            }
+
+            .btn-submit:active { transform: scale(0.98); }
+
+            .card-footer {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .card-footer a { color: #7a7671; text-decoration: none; font-weight: 500; }
+
+            .footer-black {
+                background: #000;
+                color: #a19c97;
+                text-align: center;
+                padding: 1.2rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+            }
+
+            .btn-icon-svg {
+                width: 20px;
+                height: 20px;
+                fill: #392700;
+            }
+        </style>
+    </head>
+    <body>
+
+    <nav class="navbar">
+        <div class="navbar__logo"><img th:src="@{/Ecuador_Co_N.png}" alt="Ecuador Comparte" style="height: 3.2rem; width: auto; object-fit: contain;" /></div>
+        <div class="navbar__links">
+            <a th:href="@{/}">Home</a>
+            <a href="#">Testimonios</a>
+            <a href="#">Noticias</a>
+            <a href="#">Contacto</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="login-card">
+            <div class="help-pill">
+                <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                Tengo problemas para acceder
+            </div>
+
+            <svg class="icon-main-svg" viewBox="0 0 24 24">
+                <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
+            </svg>
+
+            <h1>Acceso Privado</h1>
+            <p class="subtitle">Ingresa tus credenciales para gestionar solicitudes y contenidos</p>
+
+            <form th:action="@{/login}" method="post">
+                <input type="text" name="username" class="input-field" placeholder="Username" required autofocus />
+                <input type="password" name="password" class="input-field" placeholder="Password" required />
+
+                <div class="card-footer">
+                    <a href="#">Olvidé mi contraseña</a>
+                    <a href="#">Registrar solicitud</a>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <svg class="btn-icon-svg" viewBox="0 0 24 24">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                    </svg>
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer-black">
+        © 2026 Ecuador Comparte. Raíces en la tierra, mirada en el horizonte.
+    </footer>
+
+    </body>
+</html>

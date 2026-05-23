@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Ecuador Comparte - Raíces en la tierra</title>
+    <link rel="icon" type="image/png" th:href="@{/Ecuador_Co_N.png}" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <link th:href="@{/index.css}" rel="stylesheet"/>
+    <style>
+        .hero__content { flex: 1; min-width: 300px; }
+        .hero__inner { display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
+        .hero__title { font-family: var(--font-headline); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero__title-accent { color: var(--color-primary); font-style: italic; }
+        .hero__cta-group { display: flex; gap: 1.5rem; margin-top: 2.5rem; }
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .card-solicitudes, .card-testimonios, .card-noticias { padding: 2.5rem; border-radius: 2rem; position: relative; overflow: hidden; transition: transform 0.3s ease; }
+        .card-solicitudes { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+        .card-testimonios { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
+        .card-noticias { background: var(--color-surface-container-high); grid-column: span 1; }
+        .newsletter-section-wrapper { display: flex; flex-wrap: wrap; gap: 4rem; justify-content: space-between; padding: 5rem 0; }
+        .newsletter__input-field { width: 100%; margin-bottom: 1rem; padding: 1rem 1.5rem; border-radius: 999px; border: 1px solid var(--color-outline-variant); font-family: var(--font-body); }
+        .newsletter__textarea { border-radius: 20px !important; height: 120px; resize: none; }
+        .stat-card { padding: 2rem; border-radius: 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 0.5rem; }
+        .stat-card--primary { background: var(--color-primary); color: white; }
+        .stat-card--secondary { background: var(--color-secondary); color: white; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar__inner">
+        <div class="navbar__logo"><img th:src="@{/Ecuador_Co_N.png}" alt="Ecuador Comparte" /></div>
+
+        <div class="navbar__links">
+            <a class="navbar__link navbar__link--active" th:href="@{/}">Home</a>
+            <a class="navbar__link" th:href="@{/testimonios}">Testimonios</a>
+            <a class="navbar__link" th:href="@{/noticias}">Noticias</a>
+            <a class="navbar__link" th:href="@{/contacto}">Contacto</a>
+        </div>
+
+        <div class="navbar__actions">
+            <a th:href="@{/login}" sec:authorize="isAnonymous()">
+                <button class="btn-primary">Acceder</button>
+            </a>
+
+            <div sec:authorize="isAuthenticated()" class="navbar__user" style="display: flex; align-items: center; gap: 1rem;">
+                <span sec:authentication="name" style="font-weight: 700; color: var(--color-primary);"></span>
+
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="btn-nav-custom btn-admin">
+                    Admin
+                </a>
+
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="btn-nav-custom btn-salir">
+                        Salir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="hero textile-pattern">
+    <div class="hero__inner main-wrapper">
+        <div class="hero__content">
+            <h1 class="hero__title">
+                Uniendo <span class="hero__title-accent">voluntades</span>,<br/>
+                cosechando futuro.
+            </h1>
+            <p class="hero__description">
+                Ecuador Comparte es el puente entre la generosidad y la necesidad.
+                Conectamos recursos con proyectos de impacto social en todo el territorio.
+            </p>
+            <div class="hero__cta-group">
+                <a th:href="@{/contacto}" class="btn-primary" style="text-decoration: none;">Gestión de Solicitudes</a>
+                <a th:href="@{/testimonios}" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--color-secondary);">
+                    Conoce más
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero__images" style="flex: 1; position: relative; min-height: 400px;">
+            <img src="https://img.freepik.com/fotos-premium/fotografia-aerea-olas-pacifico-surgiendo-afloramiento-rocoso-lo-largo-costa_131346-10589.jpg?w=996"
+                 alt="Ecuador" style="width: 80%; border-radius: 2rem; box-shadow: var(--color-surface-dim) 20px 20px 0px;">
+        </div>
+    </div>
+</header>
+
+<main class="main-wrapper">
+    <section style="padding: 5rem 0;">
+        <span class="section-label">Impacto Real</span>
+        <h2 class="section-title">Nuestros Pilares de Gestión</h2>
+        <div class="bento-grid">
+            <div class="card-solicitudes">
+                <span class="material-symbols-outlined" style="font-size: 3rem; margin-bottom: 1rem;">handshake</span>
+                <h3 class="card-solicitudes__title">Gestión de Solicitudes</h3>
+                <p>Facilitamos un sistema transparente para canalizar apoyos directamente a quienes lo necesitan.</p>
+                <a th:href="@{/contacto}" class="btn-primary" style="margin-top: 2rem; display: inline-block; background: var(--color-on-primary-container);">Iniciar Proceso</a>
+            </div>
+
+            <div class="card-testimonios" style="display: flex; flex-direction: column; justify-content: space-between; background-color: var(--color-secondary-container); border: 2px solid var(--color-secondary); box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                <div class="testimonio-content">
+                    <span class="material-symbols-outlined" style="font-size: 3.5rem; color: var(--color-secondary); margin-bottom: 1.5rem; display: block;">format_quote</span>
+                    <p style="font-style: italic; font-size: 1.2rem; line-height: 1.6; color: var(--color-on-secondary-container); font-family: var(--font-body);"
+                       th:text="${primerTestimonio != null ? primerTestimonio.content : 'Conectando corazones para transformar realidades en cada rincón del país.'}">
+                    </p>
+                </div>
+
+                <div class="testimonio-author" style="display: flex; align-items: center; gap: 1.2rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.05);">
+                    <div class="author-avatar" style="width: 60px; height: 60px; border-radius: 50%; background-color: var(--color-surface-container); overflow: hidden; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=400&auto=format&fit=crop" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="author-info">
+                        <strong style="font-family: var(--font-headline); font-size: 1.1rem; color: var(--color-on-secondary-container); font-weight: 700; display: block;"
+                                th:text="${primerTestimonio != null ? primerTestimonio.name : 'Ecuador Comparte'}">Ecuador Comparte</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-outline); font-family: var(--font-body); font-weight: 500; margin: 0;"
+                           th:text="${primerTestimonio != null ? primerTestimonio.role : 'Comunidad'}">Comunidad</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-noticias">
+                <h3 style="margin-bottom: 1.5rem; color: var(--color-tertiary);">Últimas Noticias</h3>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+                    <li th:each="noticia : ${ultimasNoticias}" style="border-bottom: 1px solid var(--color-outline-variant); padding-bottom: 0.5rem;">
+                        <small th:text="${#temporals.format(noticia.publishedAt, 'dd MMM, yyyy')}" style="color: var(--color-primary); font-weight: 700;"></small>
+                        <p th:text="${noticia.title}" style="font-weight: 500;"></p>
+                    </li>
+                </ul>
+                <a th:href="@{/noticias}" style="margin-top: 1.5rem; display: block; font-weight: 700; color: var(--color-primary);">Ver todas →</a>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

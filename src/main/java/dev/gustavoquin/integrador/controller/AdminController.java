@@ -72,7 +72,7 @@ public class AdminController {
     @GetMapping("/noticias/editar/{id}")
     public String editNewsForm(@PathVariable Long id, Model model) {
         model.addAttribute("noticia", news.findById(id));
-        return "edit-news";
+        return "admin/edit-news";
     }
 
     @PostMapping("/noticias/guardar")

@@ -40,7 +40,7 @@ public class AdminController {
     @GetMapping("/noticias/nuevo")
     public String newNewsForm(Model model) {
         model.addAttribute("noticia", new News());
-        return "create-new";
+        return "admin/create-news";
     }
 
     @PostMapping("/noticias/crear")
@@ -160,14 +160,20 @@ public class AdminController {
             @RequestParam("name") String name,
             @RequestParam("role") String role,
             @RequestParam("content") String content,
+            @RequestParam(value = "photoUrl", required = false) String photoUrl,
             @RequestParam(value = "instagramUrl", required = false) String instagramUrl,
+            @RequestParam(value = "facebookUrl", required = false) String facebookUrl,
+            @RequestParam(value = "approved", defaultValue = "false") boolean approved,
             RedirectAttributes ra) {
 
         Testimony existing = testimonies.findById(id);
         existing.setName(name);
         existing.setRole(role);
         existing.setContent(content);
+        existing.setPhotoUrl(photoUrl);
         existing.setInstagramUrl(instagramUrl);
+        existing.setFacebookUrl(facebookUrl);
+        existing.setApproved(approved);
         testimonies.save(existing);
         ra.addFlashAttribute("successMsg", "Testimonio actualizado correctamente.");
         return "redirect:/admin";

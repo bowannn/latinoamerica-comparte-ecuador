@@ -10,19 +10,26 @@
     <link th:href="@{/index.css}" rel="stylesheet"/>
     <style>
         body { background-color: var(--color-background); font-family: var(--font-body); min-height: 100vh; }
-        .form-container { padding-top: 8rem; padding-bottom: 5rem; max-width: 640px; margin: 0 auto; }
+        .form-container { padding-top: 8rem; padding-bottom: 5rem; max-width: 680px; margin: 0 auto; }
         .card-form { background: var(--color-surface-container-lowest); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--color-outline-variant); box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
         .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-group label { font-family: var(--font-headline); font-weight: 700; color: var(--color-on-surface); font-size: 0.95rem; }
+        .form-group label { font-family: var(--font-headline); font-weight: 700; color: var(--color-on-surface); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .form-hint { font-size: 0.8rem; color: var(--color-outline); }
         .form-control { padding: 0.75rem 1rem; border-radius: 0.5rem; border: 1px solid var(--color-outline-variant); font-family: var(--font-body); font-size: 1rem; background: var(--color-surface); color: var(--color-on-surface); width: 100%; box-sizing: border-box; transition: border-color 0.2s; }
-        .form-control:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 0,0,0), 0.1); }
+        .form-control:focus { outline: none; border-color: var(--color-primary); }
         textarea.form-control { resize: vertical; }
+        .approved-toggle { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border-radius: 0.85rem; border: 1.5px solid; cursor: pointer; transition: all 0.2s; }
+        .approved-toggle--on  { background: #e6f4ea; border-color: #a8d5b1; }
+        .approved-toggle--off { background: #fef3e2; border-color: #f5c87a; }
+        .approved-toggle input[type="checkbox"] { width: 1.2rem; height: 1.2rem; accent-color: #137333; cursor: pointer; flex-shrink: 0; }
+        .approved-toggle label { font-weight: 600; cursor: pointer; margin: 0; }
+        .approved-toggle--on  label { color: #137333; }
+        .approved-toggle--off label { color: #b45309; }
+        .preview-photo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-outline-variant); display: none; margin-top: 0.5rem; }
         .btn-group { display: flex; gap: 1rem; margin-top: 2rem; }
         .btn-cancel { background: #fce8e6; color: var(--color-error); padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; text-align: center; flex: 1; }
         .btn-submit { background: var(--color-primary); color: var(--color-on-primary); padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer; flex: 1; font-size: 1rem; }
-        .btn-submit:hover { opacity: 0.9; }
-        .badge-approved { display: inline-block; background: #e6f4ea; color: #137333; border-radius: 999px; padding: 0.2rem 0.75rem; font-size: 0.8rem; font-weight: 700; }
-        .badge-pending  { display: inline-block; background: #fef3e2; color: #b45309; border-radius: 999px; padding: 0.2rem 0.75rem; font-size: 0.8rem; font-weight: 700; }
+        .section-divider { border: none; border-top: 1px solid var(--color-outline-variant); margin: 1.5rem 0; }
     </style>
 </head>
 <body class="textile-pattern">
@@ -33,6 +40,7 @@
         <div class="navbar__links">
             <a class="navbar__link" th:href="@{/admin}">← Volver al Dashboard</a>
         </div>
+        <div class="navbar__actions"></div>
     </div>
 </nav>
 
@@ -43,10 +51,6 @@
         <p style="color: var(--color-on-surface-variant); margin-bottom: 2rem; font-size: 0.9rem;">
             ID: <strong th:text="${testimonio.id}"></strong> &nbsp;·&nbsp;
             Registrado: <span th:text="${#temporals.format(testimonio.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
-            &nbsp;·&nbsp;
-            Estado:
-            <span th:if="${testimonio.approved}" class="badge-approved">Aprobado</span>
-            <span th:unless="${testimonio.approved}" class="badge-pending">Pendiente</span>
         </p>
 
         <form th:action="@{/admin/testimonios/guardar}" method="post">
@@ -54,31 +58,114 @@
             <input type="hidden" name="id" th:value="${testimonio.id}"/>
 
             <div class="form-group">
-                <label for="name">Nombre del Autor</label>
-                <input type="text" id="name" name="name" th:value="${testimonio.name}" class="form-control" required placeholder="Nombre completo..."/>
+                <label for="name">Nombre del Autor *</label>
+                <input type="text" id="name" name="name" th:value="${testimonio.name}" class="form-control" required/>
             </div>
 
             <div class="form-group">
-                <label for="role">Rol o Provincia</label>
+                <label for="role">Rol o Provincia *</label>
                 <input type="text" id="role" name="role" th:value="${testimonio.role}" class="form-control" required placeholder="Ej: Artesana, Pichincha..."/>
             </div>
 
             <div class="form-group">
-                <label for="content">Contenido del Testimonio</label>
-                <textarea id="content" name="content" th:text="${testimonio.content}" class="form-control" rows="6" required placeholder="Texto del testimonio..."></textarea>
+                <label for="content">Contenido del Testimonio *</label>
+                <textarea id="content" name="content" th:text="${testimonio.content}" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <hr class="section-divider"/>
+
+            <div class="form-group">
+                <label for="photoUrl">URL de Foto de Perfil <span style="font-weight:400;color:var(--color-outline);">(opcional)</span></label>
+                <input type="url" id="photoUrl" name="photoUrl" th:value="${testimonio.photoUrl}" class="form-control"
+                       placeholder="https://ejemplo.com/foto.jpg"
+                       oninput="previewPhoto(this.value)"/>
+                <span class="form-hint">Si se deja vacío se mostrará un avatar genérico en la vista pública.</span>
+                <img id="photoPreview" class="preview-photo"
+                     th:src="${testimonio.photoUrl != null && !#strings.isEmpty(testimonio.photoUrl)} ? ${testimonio.photoUrl} : ''"
+                     th:style="${testimonio.photoUrl != null && !#strings.isEmpty(testimonio.photoUrl)} ? 'display:block;' : 'display:none;'"
+                     alt="Vista previa"/>
+            </div>
+
+            <hr class="section-divider"/>
+
+            <div class="form-group">
+                <label for="instagramUrl">
+                    <span style="display:inline-flex;align-items:center;gap:0.4rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Instagram URL
+                    </span>
+                </label>
+                <input type="url" id="instagramUrl" name="instagramUrl" th:value="${testimonio.instagramUrl}" class="form-control" placeholder="https://instagram.com/usuario"/>
             </div>
 
             <div class="form-group">
-                <label for="instagramUrl">Instagram URL <span style="font-weight:400;color:var(--color-outline);">(opcional)</span></label>
-                <input type="url" id="instagramUrl" name="instagramUrl" th:value="${testimonio.instagramUrl}" class="form-control" placeholder="https://instagram.com/usuario"/>
+                <label for="facebookUrl">
+                    <span style="display:inline-flex;align-items:center;gap:0.4rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook URL
+                    </span>
+                </label>
+                <input type="url" id="facebookUrl" name="facebookUrl" th:value="${testimonio.facebookUrl}" class="form-control" placeholder="https://facebook.com/usuario"/>
+            </div>
+
+            <hr class="section-divider"/>
+
+            <div class="form-group">
+                <label>Estado de Publicación</label>
+                <div th:class="${testimonio.approved} ? 'approved-toggle approved-toggle--on' : 'approved-toggle approved-toggle--off'" id="toggleBox">
+                    <input type="checkbox" id="approved" name="approved" value="true"
+                           th:checked="${testimonio.approved}"
+                           onchange="updateToggleStyle(this)"/>
+                    <label for="approved" id="toggleLabel">
+                        <span th:if="${testimonio.approved}">
+                            <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">verified</span>
+                            Aprobado — visible en el sitio público
+                        </span>
+                        <span th:unless="${testimonio.approved}">
+                            <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">schedule</span>
+                            Pendiente — oculto en el sitio público
+                        </span>
+                    </label>
+                </div>
+                <span class="form-hint">Los testimonios pendientes no aparecen en la vista pública hasta ser aprobados.</span>
             </div>
 
             <div class="btn-group">
                 <a th:href="@{/admin}" class="btn-cancel">Cancelar</a>
-                <button type="submit" class="btn-submit">Guardar Cambios</button>
+                <button type="submit" class="btn-submit">
+                    <span style="display:inline-flex;align-items:center;gap:0.4rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;">save</span>
+                        Guardar Cambios
+                    </span>
+                </button>
             </div>
         </form>
     </div>
 </main>
+
+<script>
+    function previewPhoto(url) {
+        const img = document.getElementById('photoPreview');
+        if (url && url.trim() !== '') {
+            img.src = url;
+            img.style.display = 'block';
+            img.onerror = () => { img.style.display = 'none'; };
+        } else {
+            img.style.display = 'none';
+        }
+    }
+
+    function updateToggleStyle(checkbox) {
+        const box = document.getElementById('toggleBox');
+        const label = document.getElementById('toggleLabel');
+        if (checkbox.checked) {
+            box.className = 'approved-toggle approved-toggle--on';
+            label.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">verified</span> Aprobado — visible en el sitio público';
+        } else {
+            box.className = 'approved-toggle approved-toggle--off';
+            label.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">schedule</span> Pendiente — oculto en el sitio público';
+        }
+    }
+</script>
 </body>
 </html>

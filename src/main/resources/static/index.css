@@ -132,11 +132,12 @@ img {
 }
 
 .navbar__inner {
-    max-width: 1200px; /* Igual que el wrapper */
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 1.5rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     height: 5rem;
 }
@@ -146,6 +147,15 @@ img {
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
+    justify-self: start;
+}
+
+.navbar__links {
+    justify-self: center;
+}
+
+.navbar__actions {
+    justify-self: end;
 }
 
 .navbar__logo img {

@@ -159,9 +159,6 @@
                 <td th:text="${#temporals.format(testimonio.createdAt, 'dd/MM/yyyy')}"></td>
                 <td>
                     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                        <a th:unless="${testimonio.approved}" th:href="@{/admin/testimonios/aprobar/{id}(id=${testimonio.id})}" class="btn-action btn-action--approve">
-                            <span class="material-symbols-outlined" style="font-size:15px;">check</span>
-                        </a>
                         <a th:href="@{/admin/testimonios/editar/{id}(id=${testimonio.id})}" class="btn-action btn-action--edit">
                             <span class="material-symbols-outlined" style="font-size:15px;">edit</span>
                         </a>

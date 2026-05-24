@@ -28,13 +28,11 @@
         .crud-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--color-surface-container); vertical-align: middle; font-size: 0.93rem; }
         .crud-table tr:last-child td { border-bottom: none; }
 
-        /* Badges de estado para noticias */
         .badge { padding: 0.25rem 0.8rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; display: inline-block; }
         .badge--published  { background: #e6f4ea; color: #137333; }
         .badge--draft      { background: #fef3e2; color: #b45309; }
         .badge--null       { background: var(--color-surface-container); color: var(--color-outline); }
 
-        /* Badges de propósito para contactos */
         .badge--service    { background: #e8f0fe; color: #1a73e8; }
         .badge--edifica    { background: #fce8e6; color: #c5221f; }
         .badge--shows      { background: #f3e8fd; color: #7b1fa2; }
@@ -78,13 +76,11 @@
         <p style="color:var(--color-on-surface-variant);margin-top:0.5rem;">Gestión de contenidos y solicitudes de la plataforma.</p>
     </div>
 
-    <!-- Mensaje flash de éxito -->
     <div th:if="${successMsg}" class="alert-success">
         <span class="material-symbols-outlined" style="font-size:20px;">check_circle</span>
         <span th:text="${successMsg}"></span>
     </div>
 
-    <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon"><span class="material-symbols-outlined">newspaper</span></div>
@@ -100,9 +96,13 @@
         </div>
     </div>
 
-    <!-- ── NOTICIAS ── -->
     <div class="admin-table-wrapper">
-        <div class="admin-table-title"><span class="material-symbols-outlined">newspaper</span> Gestión de Noticias</div>
+        <div class="admin-table-title" style="justify-content: space-between;">
+            <span style="display:flex;align-items:center;gap:0.5rem;"><span class="material-symbols-outlined">newspaper</span> Gestión de Noticias</span>
+            <a th:href="@{/admin/noticias/nuevo}" class="btn-action btn-action--approve" style="padding:0.55rem 1.1rem;font-size:0.88rem;border-radius:0.6rem;text-decoration:none;">
+                <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">add_circle</span> Nueva Noticia
+            </a>
+        </div>
         <table class="crud-table">
             <thead>
             <tr><th>ID</th><th>Título</th><th>Resumen</th><th>Estado</th><th>Publicación</th><th>Acciones</th></tr>
@@ -136,9 +136,13 @@
         </table>
     </div>
 
-    <!-- ── TESTIMONIOS ── -->
     <div class="admin-table-wrapper">
-        <div class="admin-table-title"><span class="material-symbols-outlined">forum</span> Moderación de Testimonios</div>
+        <div class="admin-table-title" style="justify-content: space-between;">
+            <span style="display:flex;align-items:center;gap:0.5rem;"><span class="material-symbols-outlined">forum</span> Moderación de Testimonios</span>
+            <a th:href="@{/admin/testimonios/nuevo}" class="btn-action btn-action--approve" style="padding:0.55rem 1.1rem;font-size:0.88rem;border-radius:0.6rem;text-decoration:none;">
+                <span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">add_circle</span> Nuevo Testimonio
+            </a>
+        </div>
         <table class="crud-table">
             <thead>
             <tr><th>Autor</th><th>Rol / Provincia</th><th>Contenido</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr>

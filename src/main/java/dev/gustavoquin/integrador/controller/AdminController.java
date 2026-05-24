@@ -37,10 +37,42 @@ public class AdminController {
         return "admin/admin";
     }
 
+    @GetMapping("/noticias/nuevo")
+    public String newNewsForm(Model model) {
+        model.addAttribute("noticia", new News());
+        return "create-new";
+    }
+
+    @PostMapping("/noticias/crear")
+    public String createNews(
+            @RequestParam("title") String title,
+            @RequestParam("summary") String summary,
+            @RequestParam("content") String content,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
+            @RequestParam(value = "status", required = false) String statusStr,
+            RedirectAttributes ra) {
+        News n = new News();
+        n.setTitle(title);
+        n.setSummary(summary);
+        n.setContent(content);
+        n.setImageUrl(imageUrl);
+        if (statusStr != null && !statusStr.isBlank()) {
+            try {
+                n.setStatus(NewsStatus.valueOf(statusStr));
+                if (NewsStatus.valueOf(statusStr) == NewsStatus.STATUS_PUBLISHED) {
+                    n.setPublishedAt(java.time.LocalDateTime.now());
+                }
+            } catch (IllegalArgumentException ignored) {}
+        }
+        news.save(n);
+        ra.addFlashAttribute("successMsg", "Noticia creada correctamente.");
+        return "redirect:/admin";
+    }
+
     @GetMapping("/noticias/editar/{id}")
     public String editNewsForm(@PathVariable Long id, Model model) {
         model.addAttribute("noticia", news.findById(id));
-        return "admin/edit-new";
+        return "edit-news";
     }
 
     @PostMapping("/noticias/guardar")
@@ -72,6 +104,35 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+
+    @GetMapping("/testimonios/nuevo")
+    public String newTestimonyForm(Model model) {
+        model.addAttribute("testimonio", new Testimony());
+        return "admin/create-testimony";
+    }
+
+    @PostMapping("/testimonios/crear")
+    public String createTestimony(
+            @RequestParam("name") String name,
+            @RequestParam("role") String role,
+            @RequestParam("content") String content,
+            @RequestParam(value = "instagramUrl", required = false) String instagramUrl,
+            @RequestParam(value = "facebookUrl", required = false) String facebookUrl,
+            @RequestParam(value = "photoUrl", required = false) String photoUrl,
+            @RequestParam(value = "approved", defaultValue = "false") boolean approved,
+            RedirectAttributes ra) {
+        Testimony t = new Testimony();
+        t.setName(name);
+        t.setRole(role);
+        t.setContent(content);
+        t.setInstagramUrl(instagramUrl);
+        t.setFacebookUrl(facebookUrl);
+        t.setPhotoUrl(photoUrl);
+        t.setApproved(approved);
+        testimonies.save(t);
+        ra.addFlashAttribute("successMsg", "Testimonio creado correctamente.");
+        return "redirect:/admin";
+    }
     @GetMapping("/testimonios/aprobar/{id}")
     public String approve(@PathVariable Long id) {
         Testimony t = testimonies.findById(id);

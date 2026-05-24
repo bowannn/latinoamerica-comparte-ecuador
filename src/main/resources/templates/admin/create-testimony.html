@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Crear Testimonio – Panel de Administración</title>
+    <link rel="icon" type="image/png" th:href="@{/Ecuador_Co_N.png}" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link th:href="@{/index.css}" rel="stylesheet"/>
+    <style>
+        body { background-color: var(--color-background); color: var(--color-on-surface); font-family: var(--font-body); min-height: 100vh; }
+        .form-container { max-width: 700px; margin: 0 auto; padding-top: 8rem; padding-bottom: 5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+        .form-card { background: var(--color-surface-container-lowest); border-radius: 2rem; padding: 3rem; border: 1px solid var(--color-outline-variant); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .form-title { font-family: var(--font-headline); font-size: 1.6rem; color: var(--color-primary); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.6rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.4rem; }
+        .form-group label { font-weight: 700; font-size: 0.88rem; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.04em; }
+        .form-control { padding: 0.9rem 1.1rem; border-radius: 0.85rem; border: 1.5px solid var(--color-outline-variant); font-family: var(--font-body); font-size: 0.97rem; background: var(--color-surface); color: var(--color-on-surface); transition: border-color 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--color-primary); }
+        textarea.form-control { resize: vertical; min-height: 130px; }
+        .form-hint { font-size: 0.8rem; color: var(--color-outline); margin-top: 0.2rem; }
+        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .btn-save { background: var(--color-primary); color: var(--color-on-primary); padding: 0.85rem 2.2rem; border-radius: 999px; font-weight: 700; border: none; cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .btn-save:hover { background: var(--color-primary-dim); transform: translateY(-1px); }
+        .btn-cancel { background: var(--color-surface-container); color: var(--color-on-surface); padding: 0.85rem 2.2rem; border-radius: 999px; font-weight: 600; border: none; cursor: pointer; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .approved-toggle { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border-radius: 0.85rem; background: #e6f4ea; border: 1.5px solid #a8d5b1; }
+        .approved-toggle input[type="checkbox"] { width: 1.2rem; height: 1.2rem; accent-color: #137333; cursor: pointer; }
+        .approved-toggle label { font-weight: 600; color: #137333; cursor: pointer; margin: 0; }
+    </style>
+</head>
+<body class="textile-pattern">
+
+<nav class="navbar">
+    <div class="navbar__inner">
+        <div class="navbar__logo"><img th:src="@{/Ecuador_Co_N.png}" alt="Ecuador Comparte" /></div>
+        <div class="navbar__links">
+            <a class="navbar__link" th:href="@{/}">Ver Sitio</a>
+            <a class="navbar__link navbar__link--active" th:href="@{/admin}">Dashboard</a>
+        </div>
+        <div class="navbar__actions">
+            <div sec:authorize="isAuthenticated()" class="navbar__user">
+                <span sec:authentication="name" style="font-weight:700;color:var(--color-primary);margin-right:1rem;"></span>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="btn-primary" style="padding:0.5rem 1.2rem;font-size:0.8rem;cursor:pointer;">Salir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="form-container">
+    <div class="form-card">
+        <div class="form-title">
+            <span class="material-symbols-outlined">add_comment</span>
+            Crear Nuevo Testimonio
+        </div>
+
+        <form th:action="@{/admin/testimonios/crear}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div class="form-group">
+                <label for="name">Nombre del Autor *</label>
+                <input id="name" class="form-control" type="text" name="name" placeholder="Ej: María García" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Cargo u Ocupación *</label>
+                <input id="role" class="form-control" type="text" name="role" placeholder="Ej: Voluntaria – Quito" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Contenido del Testimonio *</label>
+                <textarea id="content" class="form-control" name="content" placeholder="Escribe aquí el testimonio completo..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="photoUrl">URL de Foto de Perfil</label>
+                <input id="photoUrl" class="form-control" type="url" name="photoUrl" placeholder="https://ejemplo.com/foto.jpg"/>
+                <span class="form-hint">Opcional. Si se deja vacío se mostrará un avatar genérico.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="instagramUrl">Instagram (URL)</label>
+                <input id="instagramUrl" class="form-control" type="url" name="instagramUrl" placeholder="https://instagram.com/usuario"/>
+            </div>
+
+            <div class="form-group">
+                <label for="facebookUrl">Facebook (URL)</label>
+                <input id="facebookUrl" class="form-control" type="url" name="facebookUrl" placeholder="https://facebook.com/usuario"/>
+            </div>
+
+            <div class="form-group">
+                <div class="approved-toggle">
+                    <input type="checkbox" id="approved" name="approved" value="true" checked/>
+                    <label for="approved">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;">verified</span>
+                        Publicar de inmediato (testimonio aprobado)
+                    </label>
+                </div>
+                <span class="form-hint">Si lo desactivas, el testimonio quedará en estado "Pendiente" y no será visible en el sitio público hasta aprobarlo.</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <span class="material-symbols-outlined" style="font-size:20px;">save</span>
+                    Guardar Testimonio
+                </button>
+                <a th:href="@{/admin}" class="btn-cancel">
+                    <span class="material-symbols-outlined" style="font-size:20px;">arrow_back</span>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

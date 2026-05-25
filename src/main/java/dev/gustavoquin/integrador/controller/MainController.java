@@ -31,11 +31,11 @@ public class MainController {
         return "news/news";
     }
 
-    //@GetMapping("/testimonios")
-    //public String showTestimonials(Model model) {
-    //    model.addAttribute("testimonyList", testimonyService.findApproved());
-    //    return "testimony/testimony";
-    //}
+    @GetMapping("/testimonios")
+    public String showTestimonials(Model model) {
+        model.addAttribute("testimonyList", testimonyService.findApproved());
+        return "testimony/testimony";
+    }
 
     @GetMapping("/contacto")
     public String showContact(Model model) {

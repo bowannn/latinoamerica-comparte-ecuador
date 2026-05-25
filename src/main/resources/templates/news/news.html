@@ -128,8 +128,8 @@
         <h1 class="section-title" style="font-size: 3.5rem;">Relatos que <span style="color:var(--color-primary); font-style:italic;">trascienden</span></h1>
 
         <div class="featured-article" th:if="${newsList != null and !newsList.empty}" style="margin-top: 4rem;">
-            <div class="featured-article__image">
-                <img src="https://mediaim.expedia.com/destination/1/53f19920ae4ba837cf909aec8111026a.jpg?impolicy=fcrop&w=1040&h=580&q=mediumHigh">
+            <div class="featured-article__image" th:if="${newsList[0].imageUrl != null and !newsList[0].imageUrl.isEmpty()}">
+                <img th:src="${newsList[0].imageUrl}" alt="Imagen de la noticia" style="width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="featured-article__content">
                 <span class="section-label" style="color: var(--color-tertiary);">Lo más reciente</span>
@@ -154,9 +154,9 @@
 
     <div class="news-grid">
         <article class="article-card" th:each="news : ${newsList}">
-            <div class="article-card__img-wrapper">
+            <div class="article-card__img-wrapper" th:if="${news.imageUrl != null and !news.imageUrl.isEmpty()}">
                 <span class="category-tag">ACTUALIDAD</span>
-                <img src="https://www.tripsavvy.com/thmb/r_gecE1l8lxYNJSjHDKcXpNuIQg=/2121x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-556451355-5ae51d97642dca0037c85ac5.jpg">
+                <img th:src="${news.imageUrl}" alt="Imagen de la noticia" style="width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="article-card__body">
                 <h3 style="font-family: var(--font-headline); font-weight: 800;" th:text="${news.title}">Título</h3>
@@ -197,6 +197,5 @@
         © 2026 Ecuador Comparte. Raíces en la tierra, mirada en el horizonte.
     </div>
 </footer>
-
 </body>
 </html>

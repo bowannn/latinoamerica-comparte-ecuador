@@ -81,6 +81,7 @@ public class AdminController {
             @RequestParam("title") String title,
             @RequestParam("summary") String summary,
             @RequestParam("content") String content,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
             @RequestParam(value = "status", required = false) String statusStr,
             RedirectAttributes ra) {
 
@@ -88,6 +89,7 @@ public class AdminController {
         existing.setTitle(title);
         existing.setSummary(summary);
         existing.setContent(content);
+        existing.setImageUrl(imageUrl != null && !imageUrl.isBlank() ? imageUrl : null);
         if (statusStr != null && !statusStr.isBlank()) {
             try { existing.setStatus(NewsStatus.valueOf(statusStr)); }
             catch (IllegalArgumentException ignored) {}

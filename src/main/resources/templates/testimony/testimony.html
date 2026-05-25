@@ -121,7 +121,7 @@
     <section class="testimonials-grid">
 
         <th:block th:each="testimony : ${testimonyList}">
-            <article class="testimony-card" th:if="${testimony.approved}">
+            <article class="testimony-card" th:if="${testimony != null && testimony.approved}">
                 <div class="testimony-card__content">
                     <span class="material-symbols-outlined quote-icon">format_quote</span>
                     <p class="testimony-text" th:text="${testimony.content}"></p>

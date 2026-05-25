@@ -1,13 +1,13 @@
-# 🇪🇨 Ecuador Comparte - Sistema Integrador
+# Ecuador Comparte - Sistema Integrador
 
 Backend robusto desarrollado en **Java con Spring Boot** para la plataforma "Ecuador Comparte", encargado de la gestión de noticias, testimonios, autenticación de usuarios e inicialización automática de datos para la gestión comunitaria e informativa.
 
 ---
 
 ## Integrantes del Proyecto
-* **Nicolás Castañeda Martínez** - *Sistemas de Información & Despliegue*
-* **Juan Sebastián Silva Vega** - *Desarrollo Backend*
-* **Gustavo Alfredo Gutiérrez Quintero** - *Desarrollo Backend*
+* **Nicolás Castañeda Martínez**
+* **Juan Sebastián Silva Vega**
+* **Gustavo Alfredo Gutiérrez Quintero**
 
 ---
 

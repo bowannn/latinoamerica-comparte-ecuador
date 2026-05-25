@@ -25,9 +25,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/contact/**", "/h2/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/testimonios", "/noticias", "/contacto",
+                        .requestMatchers("/", "/login", "/testimonios", "/testimonios/nuevo", "/noticias", "/contacto",
                                 "/contact/**", "/h2/**", "/index.css", "/static/**", "/css/**", "/images/**", "/*.png", "/*.jpg", "/*.ico").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Solo ADMIN entra aquí
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

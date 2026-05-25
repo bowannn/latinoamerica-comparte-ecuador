@@ -1,5 +1,6 @@
 package dev.gustavoquin.integrador.controller;
 
+import dev.gustavoquin.integrador.model.entity.Testimony;
 import dev.gustavoquin.integrador.model.service.NewsService;
 import dev.gustavoquin.integrador.model.service.TestimonyService;
 import dev.gustavoquin.integrador.model.dto.ContactRequestDTO;
@@ -37,6 +38,7 @@ public class MainController {
                                    @RequestParam(value = "enviado", required = false) String enviado) {
         model.addAttribute("testimonyList", testimonyService.findApproved());
         model.addAttribute("enviado", enviado != null);
+        model.addAttribute("testimonioDTO", new Testimony());
         return "testimony/testimony";
     }
 

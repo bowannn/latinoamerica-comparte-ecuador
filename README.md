@@ -195,3 +195,5 @@ Tras una lectura detallada de los logs de ejecución, diagnosticamos que el pool
 ¿Cuáles fueron los aprendizajes técnicos más valiosos?
 
 El aprendizaje más valioso fue experimentar y apropiarse del ciclo de vida completo de un desarrollo de software de nivel empresarial: desde el diseño conceptual del modelo de entidades en la base de datos relacional, pasando por la lógica modular del lenguaje Java, hasta la madurez de empaquetar la aplicación, subirla a un entorno real en la nube y realizar un monitoreo analítico mediante logs de consola para diagnosticar y resolver fallas críticas de infraestructura.
+
+<img width="662" height="563" alt="image" src="https://github.com/user-attachments/assets/eec73d0f-e1be-448d-badd-6f61d0d84fc8" />

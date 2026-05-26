@@ -240,21 +240,30 @@ img {
 }
 
 .footer {
-    background-color: #0f172a;
-    color: #f1f5f9;
+    background-color: #f0ebe3;
+    color: #2d2d2d;
     padding: 5rem 0 2rem;
     margin-top: 5rem;
 }
 
+.footer a {
+    color: #2d2d2d;
+}
+
 .footer-bottom {
-    background-color: #000;
-    color: var(--color-inverse-on-surface);
+    background-color: #e0d9cf;
+    color: #3a3a3a;
     text-align: center;
     padding: 1.5rem;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.footer__logo img {
+    height: 210px;
+    width: auto;
 }
 .newsletter__form-container {
     max-width: 600px;
